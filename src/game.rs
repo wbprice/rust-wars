@@ -35,3 +35,33 @@ impl SimpleState for Game {
     }
 
 }
+
+#[derive(PartialEq, Eq)]
+pub enum Faction {
+    Red,
+    Blue
+}
+
+pub struct Cursor {
+    pub faction: Faction,
+    pub x: i32,
+    pub y: i32,
+    pub width: i32,
+    pub height: i32
+}
+
+impl Cursor {
+    fn new(faction: Faction) -> Cursor {
+        Cursor {
+            faction,
+            x: 0.0,
+            y: 0.0,
+            width: 100.0,
+            height: 100.0
+        }
+    }
+}
+
+impl Component for Cursor {
+    type Storage = DenseVecStorage<Self>;
+}
