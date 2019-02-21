@@ -5,9 +5,8 @@ use amethyst::renderer::{DisplayConfig, DrawFlat2D, Event, Pipeline,
                          RenderBundle, Stage, VirtualKeyCode};
 use amethyst::utils::application_root_dir;
 
-pub struct Game;
-
-impl SimpleState for Game {}
+mod game;
+use crate::game::Game;
 
 fn main() -> amethyst::Result<()> {
 
