@@ -12,6 +12,9 @@ pub struct Game;
 pub const ARENA_HEIGHT: f32 = 400.0;
 pub const ARENA_WIDTH: f32 = 400.0;
 
+pub const CURSOR_WIDTH: i32 = 48;
+pub const CURSOR_HEIGHT: i32 = 48;
+
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
     transform.set_z(1.0);
@@ -54,10 +57,10 @@ impl Cursor {
     fn new(faction: Faction) -> Cursor {
         Cursor {
             faction,
-            x: 0.0,
-            y: 0.0,
-            width: 100.0,
-            height: 100.0
+            x: 0,
+            y: 0,
+            width: CURSOR_WIDTH,
+            height: CURSOR_HEIGHT
         }
     }
 }
