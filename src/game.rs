@@ -89,6 +89,11 @@ pub enum Faction {
     Red
 }
 
+pub enum Movement {
+    Vertical,
+    Horizontal
+}
+
 pub struct Cursor {
     pub faction: Faction,
     pub x: f32,

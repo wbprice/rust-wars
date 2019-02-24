@@ -2,7 +2,7 @@ use amethyst::core::Transform;
 use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
 use amethyst::input::InputHandler;
 
-use crate::game::{Cursor, Faction, ARENA_HEIGHT, ARENA_WIDTH, CURSOR_HEIGHT};
+use crate::game::{Cursor, Movement, ARENA_HEIGHT, ARENA_WIDTH, CURSOR_HEIGHT};
 
 pub struct CursorSystem;
 
@@ -17,8 +17,8 @@ impl<'s> System<'s> for CursorSystem {
         for (cursor, transform) in (&cursors, &mut transforms).join() {
 
             let movement = match cursor.faction {
-                Faction::Blue => input.axis_value("vertical"),
-                Faction::Red => input.axis_value("horizontal")
+                Movement::Vertical => input.axis_value("vertical"),
+                Movement::Horizontal => input.axis_value("horizontal")
             };
 
             if let Some(mv_amount) = movement {
