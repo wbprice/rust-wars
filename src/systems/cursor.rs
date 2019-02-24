@@ -2,7 +2,7 @@ use amethyst::core::Transform;
 use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
 use amethyst::input::InputHandler;
 
-use crate::game::{Cursor, Faction, ARENA_HEIGHT, ARENA_WIDTH};
+use crate::game::{Cursor, Faction, ARENA_HEIGHT, ARENA_WIDTH, CURSOR_HEIGHT};
 
 pub struct CursorSystem;
 
@@ -23,7 +23,12 @@ impl<'s> System<'s> for CursorSystem {
 
             if let Some(mv_amount) = movement {
                 let scaled_amount = 1.2 * mv_amount as f32;
-                transform.translate_y(scaled_amount);
+                let paddle_y = transform.translation().y;
+                transform.set_y(
+                    (paddle_y + scaled_amount)
+                        .min(ARENA_HEIGHT - CURSOR_HEIGHT * 0.5)
+                        .max(CURSOR_HEIGHT * 0.5),
+                );
             }
         }
     }
