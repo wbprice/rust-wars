@@ -34,7 +34,7 @@ fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
     let mut transform = Transform::default();
 
     let y = ARENA_HEIGHT / 2.0;
-    transform.set_xyz(100.0, y, 0.0);
+    transform.set_xyz(8.0, y, 0.0);
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet.clone(),
@@ -89,15 +89,8 @@ pub enum Faction {
     Red
 }
 
-pub enum Movement {
-    Vertical,
-    Horizontal
-}
-
 pub struct Cursor {
     pub faction: Faction,
-    pub x: f32,
-    pub y: f32,
     pub width: f32,
     pub height: f32
 }
@@ -106,8 +99,6 @@ impl Cursor {
     fn new(faction: Faction) -> Cursor {
         Cursor {
             faction,
-            x: 0.0,
-            y: 0.0,
             width: CURSOR_WIDTH,
             height: CURSOR_HEIGHT
         }
