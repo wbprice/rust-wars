@@ -12,8 +12,8 @@ pub struct Game;
 pub const ARENA_HEIGHT: f32 = 400.0;
 pub const ARENA_WIDTH: f32 = 400.0;
 
-pub const CURSOR_WIDTH: i32 = 48;
-pub const CURSOR_HEIGHT: i32 = 48;
+pub const CURSOR_WIDTH: f32 = 48.0;
+pub const CURSOR_HEIGHT: f32 = 48.0;
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
@@ -30,10 +30,25 @@ fn initialise_camera(world: &mut World) {
         .build();
 }
 
+fn initialize_cursor(world: &mut World) {
+    let mut transform = Transform::default();
+
+    let y = ARENA_HEIGHT / 2.0;
+    transform.set_xyz(CURSOR_WIDTH * 0.5, y, 0.0);
+
+    world.create_entity()
+        .with(Cursor::new(Faction::Blue))
+        .with(transform)
+        .build();
+}
+
 impl SimpleState for Game {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
+        world.register::<Cursor>();
+
+        initialize_cursor(world);
         initialise_camera(world);
     }
 
@@ -47,18 +62,18 @@ pub enum Faction {
 
 pub struct Cursor {
     pub faction: Faction,
-    pub x: i32,
-    pub y: i32,
-    pub width: i32,
-    pub height: i32
+    pub x: f32,
+    pub y: f32,
+    pub width: f32,
+    pub height: f32
 }
 
 impl Cursor {
     fn new(faction: Faction) -> Cursor {
         Cursor {
             faction,
-            x: 0,
-            y: 0,
+            x: 0.0,
+            y: 0.0,
             width: CURSOR_WIDTH,
             height: CURSOR_HEIGHT
         }
