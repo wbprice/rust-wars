@@ -9,11 +9,11 @@ use amethyst::renderer::{
 
 pub struct Game;
 
-pub const ARENA_HEIGHT: f32 = 400.0;
-pub const ARENA_WIDTH: f32 = 400.0;
+pub const ARENA_HEIGHT: f32 = 640.0;
+pub const ARENA_WIDTH: f32 = 480.0;
 
-pub const CURSOR_WIDTH: f32 = 48.0;
-pub const CURSOR_HEIGHT: f32 = 48.0;
+pub const CURSOR_WIDTH: f32 = 64.0;
+pub const CURSOR_HEIGHT: f32 = 64.0;
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
@@ -34,7 +34,7 @@ fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
     let mut transform = Transform::default();
 
     let y = ARENA_HEIGHT / 2.0;
-    transform.set_xyz(CURSOR_WIDTH * 0.5, y, 0.0);
+    transform.set_xyz(100.0, y, 0.0);
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet.clone(),
