@@ -15,19 +15,15 @@ impl<'s> System<'s> for CursorSystem {
 
     fn run(&mut self, (mut transforms, cursors, input): Self::SystemData) {
         for (cursor, transform) in (&cursors, &mut transforms).join() {
+
             let movement = match cursor.faction {
                 Faction::Blue => input.axis_value("vertical"),
                 Faction::Red => input.axis_value("horizontal")
             };
 
             if let Some(mv_amount) = movement {
-                if mv_amount != 0.0 {
-                    let faction_name = match cursor.faction {
-                        Faction::Blue => "blue",
-                        Faction::Red => "red"
-                    };
-                    println!("Side {:?} moving {}", faction_name, mv_amount);
-                }
+                let scaled_amount = 1.2 * mv_amount as f32;
+                transform.translate_y(scaled_amount);
             }
         }
     }

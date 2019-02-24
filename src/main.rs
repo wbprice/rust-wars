@@ -8,6 +8,7 @@ use amethyst::core::transform::TransformBundle;
 use amethyst::input::InputBundle;
 
 mod systems;
+
 mod game;
 use crate::game::Game;
 
