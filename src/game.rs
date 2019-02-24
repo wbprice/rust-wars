@@ -77,7 +77,6 @@ impl SimpleState for Game {
         let world = data.world;
         let sprite_sheet_handle = load_sprite_sheet(world);
 
-        world.register::<Cursor>();
         initialize_cursor(world, sprite_sheet_handle);
         initialise_camera(world);
     }
