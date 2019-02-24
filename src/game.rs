@@ -9,8 +9,8 @@ use amethyst::renderer::{
 
 pub struct Game;
 
-pub const ARENA_HEIGHT: f32 = 640.0;
-pub const ARENA_WIDTH: f32 = 480.0;
+pub const ARENA_WIDTH: f32 = 640.0;
+pub const ARENA_HEIGHT: f32 = 480.0;
 
 pub const CURSOR_WIDTH: f32 = 64.0;
 pub const CURSOR_HEIGHT: f32 = 64.0;
@@ -86,8 +86,8 @@ impl SimpleState for Game {
 
 #[derive(PartialEq, Eq)]
 pub enum Faction {
-    Red,
-    Blue
+    Blue,
+    Red
 }
 
 pub struct Cursor {
