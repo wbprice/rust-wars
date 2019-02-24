@@ -14,7 +14,7 @@ impl<'s> System<'s> for CursorSystem {
     ); 
 
     fn run(&mut self, (mut transforms, cursors, input): Self::SystemData) {
-        for (cursor, transform) in (&cursors, &mut transforms).join() {
+        for (_cursor, transform) in (&cursors, &mut transforms).join() {
 
             let vertical_movement = input.axis_value("vertical");
             let horizontal_movement = input.axis_value("horizontal");
