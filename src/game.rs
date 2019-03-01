@@ -34,7 +34,7 @@ fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
     let mut transform = Transform::default();
 
     let y = ARENA_HEIGHT / 2.0;
-    transform.set_xyz(8.0, y, 0.0);
+    transform.set_xyz(0.0, y, 0.0);
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet.clone(),
@@ -80,7 +80,6 @@ impl SimpleState for Game {
         initialize_cursor(world, sprite_sheet_handle);
         initialise_camera(world);
     }
-
 }
 
 #[derive(PartialEq, Eq)]
@@ -92,7 +91,9 @@ pub enum Faction {
 pub struct Cursor {
     pub faction: Faction,
     pub width: f32,
-    pub height: f32
+    pub height: f32,
+    pub x: f32,
+    pub y: f32
 }
 
 impl Cursor {
@@ -100,7 +101,9 @@ impl Cursor {
         Cursor {
             faction,
             width: CURSOR_WIDTH,
-            height: CURSOR_HEIGHT
+            height: CURSOR_HEIGHT,
+            x: 0.0,
+            y: 0.0
         }
     }
 }
