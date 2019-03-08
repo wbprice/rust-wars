@@ -48,6 +48,21 @@ fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
         .build();
 }
 
+fn initialize_tank(world: &mut World, sprite_sheet: SpriteSheetHandle) {
+    let mut transform = Transform::default();
+
+    let sprite_render = SpriteRender {
+        sprite_sheet: sprite_sheet.clone(),
+        sprite_number: 0
+    };
+
+    world.create_entity()
+        .with(Cursor::new(Faction::Blue))
+        .with(sprite_render.clone())
+        .with(transform)
+        .build();
+}
+
 fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let texture_handle = {
         let loader = world.read_resource::<Loader>();
@@ -106,5 +121,25 @@ impl Cursor {
 }
 
 impl Component for Cursor {
+    type Storage = DenseVecStorage<Self>;
+}
+
+pub struct Tank {
+    pub faction: Faction
+    pub x: i8,
+    pub y: i8
+}
+
+impl Tank {
+    fn new (faction: Faction, x: i8, y: i8) -> Tank {
+        Tank {
+            faction,
+            x,
+            y
+        }
+    }
+}
+
+impl Component for Tank {
     type Storage = DenseVecStorage<Self>;
 }

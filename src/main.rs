@@ -10,6 +10,7 @@ use amethyst::input::InputBundle;
 mod systems;
 
 mod game;
+mod components;
 use crate::game::Game;
 
 fn main() -> amethyst::Result<()> {
