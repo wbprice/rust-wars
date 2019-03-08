@@ -4,8 +4,7 @@ use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use amethyst::prelude::*;
 use amethyst::renderer::{
     Camera, PngFormat, Projection, SpriteRender, SpriteSheet,
-    SpriteSheetFormat, SpriteSheetHandle, Texture, TextureMetadata,
-    Transparent
+    SpriteSheetFormat, SpriteSheetHandle, Texture, TextureMetadata
 };
 
 pub struct Game;
@@ -61,7 +60,7 @@ fn initialize_tank(world: &mut World, sprite_sheet: SpriteSheetHandle, x: i8, y:
     transform.set_xyz(x as f32 * 48.0, x as f32 * 48.0, 0.0);
 
     world.create_entity()
-        .with(Tank::new(Faction::Blue, 0, 0))
+        .with(tank)
         .with(sprite_render.clone())
         .with(transform)
         .build();
