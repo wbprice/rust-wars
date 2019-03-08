@@ -1,7 +1,8 @@
 # rust-wars
 A Wars-style game implemented in Rust.
 
-<img width="320" alt="screen shot 2019-03-08 at 1 50 31 pm" src="https://user-images.githubusercontent.com/2590422/54048988-44bc9980-41a9-11e9-8a03-cf329e5e518a.png">
+<img width="641" alt="Screen Shot 2019-03-08 at 5 46 26 PM" src="https://user-images.githubusercontent.com/2590422/54060458-bfe27780-41ca-11e9-88b6-9d78e8e1bddc.png">
+
 
 ## Getting Started
 
