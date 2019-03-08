@@ -49,7 +49,7 @@ fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
         .build();
 }
 
-fn initialize_tank(world: &mut World, sprite_sheet: SpriteSheetHandle) {
+fn initialize_tank(world: &mut World, sprite_sheet: SpriteSheetHandle, x: i8, y: i8) {
     let mut transform = Transform::default();
 
     let sprite_render = SpriteRender {
@@ -57,7 +57,8 @@ fn initialize_tank(world: &mut World, sprite_sheet: SpriteSheetHandle) {
         sprite_number: 0
     };
 
-    transform.set_xyz(48.0, 48.0, 0.0);
+    let tank = Tank::new(Faction::Blue, x, y);
+    transform.set_xyz(x as f32 * 48.0, x as f32 * 48.0, 0.0);
 
     world.create_entity()
         .with(Tank::new(Faction::Blue, 0, 0))
@@ -98,7 +99,7 @@ impl SimpleState for Game {
         world.register::<Tank>();
 
         initialize_cursor(world, sprite_sheet_handle.clone());
-        initialize_tank(world, sprite_sheet_handle);
+        initialize_tank(world, sprite_sheet_handle, 2, 2);
         initialise_camera(world);
     }
 
