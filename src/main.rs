@@ -26,7 +26,7 @@ fn main() -> amethyst::Result<()> {
     let pipe = Pipeline::build()
         .with_stage(
             Stage::with_backbuffer()
-                .clear_target([0.60, 0.78, 0.06, 1.0], 1.0)
+                .clear_target([0.6078431373, 0.737254902, 0.05882352941, 1.0], 1.0)
                 .with_pass(DrawFlat2D::new())
         );
 
