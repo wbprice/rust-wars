@@ -12,8 +12,8 @@ pub struct Game;
 pub const ARENA_WIDTH: f32 = 640.0;
 pub const ARENA_HEIGHT: f32 = 480.0;
 
-pub const CURSOR_WIDTH: f32 = 64.0;
-pub const CURSOR_HEIGHT: f32 = 64.0;
+pub const CURSOR_WIDTH: f32 = 32.0;
+pub const CURSOR_HEIGHT: f32 = 32.0;
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
@@ -57,10 +57,34 @@ fn initialize_tank(world: &mut World, sprite_sheet: SpriteSheetHandle, x: i8, y:
     };
 
     let tank = Tank::new(Faction::Blue, x, y);
-    transform.set_xyz(x as f32 * 48.0, x as f32 * 48.0, 0.0);
+    transform.set_xyz(x as f32 * 32.0, x as f32 * 32.0, 0.1);
 
     world.create_entity()
         .with(tank)
+        .with(sprite_render.clone())
+        .with(transform)
+        .build();
+}
+
+fn initialize_terrain(world: &mut World, sprite_sheet: SpriteSheetHandle) {
+    for x in 1..20 {
+        for y in 1..15 {
+            initialize_terrain_cell(world, sprite_sheet.clone(), x, y)
+        }
+    }
+}
+
+fn initialize_terrain_cell(world: &mut World, sprite_sheet: SpriteSheetHandle, x: i8, y: i8) {
+    let mut transform = Transform::default();
+    transform.set_xyz(x as f32 * 32.0, y as f32 * 32.0, 0.0);
+
+    let sprite_render = SpriteRender {
+        sprite_sheet: sprite_sheet.clone(),
+        sprite_number: 5
+    };
+
+    world.create_entity()
+        .with(TerrainCell::new(x, y))
         .with(sprite_render.clone())
         .with(transform)
         .build();
@@ -96,9 +120,11 @@ impl SimpleState for Game {
         let sprite_sheet_handle = load_sprite_sheet(world);
 
         world.register::<Tank>();
+        world.register::<TerrainCell>();
 
         initialize_cursor(world, sprite_sheet_handle.clone());
-        initialize_tank(world, sprite_sheet_handle, 2, 2);
+        initialize_tank(world, sprite_sheet_handle.clone(), 2, 2);
+        initialize_terrain(world, sprite_sheet_handle);
         initialise_camera(world);
     }
 
@@ -147,5 +173,23 @@ impl Tank {
 }
 
 impl Component for Tank {
+    type Storage = DenseVecStorage<Self>;
+}
+
+pub struct TerrainCell {
+    pub x: i8,
+    pub y: i8
+}
+
+impl TerrainCell {
+    fn new (x: i8, y: i8) -> TerrainCell {
+        TerrainCell {
+            x,
+            y
+        }
+    }
+}
+
+impl Component for TerrainCell {
     type Storage = DenseVecStorage<Self>;
 }
