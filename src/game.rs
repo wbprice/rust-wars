@@ -30,7 +30,7 @@ fn initialise_camera(world: &mut World) {
         .build();
 }
 
-fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
+fn initialize_cursor(world: &mut World, sprite_sheet: &SpriteSheetHandle) {
     let mut transform = Transform::default();
 
     let y = ARENA_HEIGHT / 2.0;
@@ -38,7 +38,7 @@ fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet.clone(),
-        sprite_number: 0
+        sprite_number: 4
     };
 
     world.create_entity()
@@ -48,7 +48,7 @@ fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
         .build();
 }
 
-fn initialize_tank(world: &mut World, sprite_sheet: SpriteSheetHandle) {
+fn initialize_tank(world: &mut World, sprite_sheet: &SpriteSheetHandle) {
     let mut transform = Transform::default();
 
     let sprite_render = SpriteRender {
@@ -92,7 +92,8 @@ impl SimpleState for Game {
         let world = data.world;
         let sprite_sheet_handle = load_sprite_sheet(world);
 
-        initialize_cursor(world, sprite_sheet_handle);
+        initialize_cursor(world, &sprite_sheet_handle);
+        initialize_tank(world, &sprite_sheet_handle);
         initialise_camera(world);
     }
 
@@ -125,7 +126,7 @@ impl Component for Cursor {
 }
 
 pub struct Tank {
-    pub faction: Faction
+    pub faction: Faction,
     pub x: i8,
     pub y: i8
 }
