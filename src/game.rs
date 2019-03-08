@@ -5,6 +5,7 @@ use amethyst::prelude::*;
 use amethyst::renderer::{
     Camera, PngFormat, Projection, SpriteRender, SpriteSheet,
     SpriteSheetFormat, SpriteSheetHandle, Texture, TextureMetadata,
+    Transparent
 };
 
 pub struct Game;
@@ -17,7 +18,7 @@ pub const CURSOR_HEIGHT: f32 = 64.0;
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
-    transform.set_z(1.0);
+    transform.set_z(2.0);
     world
         .create_entity()
         .with(Camera::from(Projection::orthographic(
@@ -30,11 +31,11 @@ fn initialise_camera(world: &mut World) {
         .build();
 }
 
-fn initialize_cursor(world: &mut World, sprite_sheet: &SpriteSheetHandle) {
+fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
     let mut transform = Transform::default();
 
     let y = ARENA_HEIGHT / 2.0;
-    transform.set_xyz(8.0, y, 0.0);
+    transform.set_xyz(8.0, y, 1.0);
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet.clone(),
@@ -48,13 +49,15 @@ fn initialize_cursor(world: &mut World, sprite_sheet: &SpriteSheetHandle) {
         .build();
 }
 
-fn initialize_tank(world: &mut World, sprite_sheet: &SpriteSheetHandle) {
+fn initialize_tank(world: &mut World, sprite_sheet: SpriteSheetHandle) {
     let mut transform = Transform::default();
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet.clone(),
         sprite_number: 0
     };
+
+    transform.set_xyz(48.0, 48.0, 0.0);
 
     world.create_entity()
         .with(Tank::new(Faction::Blue, 0, 0))
@@ -92,8 +95,10 @@ impl SimpleState for Game {
         let world = data.world;
         let sprite_sheet_handle = load_sprite_sheet(world);
 
-        initialize_cursor(world, &sprite_sheet_handle);
-        initialize_tank(world, &sprite_sheet_handle);
+        world.register::<Tank>();
+
+        initialize_cursor(world, sprite_sheet_handle.clone());
+        initialize_tank(world, sprite_sheet_handle);
         initialise_camera(world);
     }
 
