@@ -57,7 +57,7 @@ fn initialize_tank(world: &mut World, sprite_sheet: &SpriteSheetHandle) {
     };
 
     world.create_entity()
-        .with(Cursor::new(Faction::Blue))
+        .with(Tank::new(Faction::Blue, 0, 0))
         .with(sprite_render.clone())
         .with(transform)
         .build();
