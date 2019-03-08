@@ -2,7 +2,7 @@ extern crate amethyst;
 
 use amethyst::prelude::*;
 use amethyst::renderer::{DisplayConfig, DrawFlat2D, Event, Pipeline,
-                         RenderBundle, Stage, VirtualKeyCode};
+                         RenderBundle, Stage, VirtualKeyCode, ColorMask, ALPHA};
 use amethyst::utils::application_root_dir;
 use amethyst::core::transform::TransformBundle;
 use amethyst::input::InputBundle;
@@ -10,6 +10,7 @@ use amethyst::input::InputBundle;
 mod systems;
 
 mod game;
+mod components;
 use crate::game::Game;
 
 fn main() -> amethyst::Result<()> {
@@ -26,7 +27,7 @@ fn main() -> amethyst::Result<()> {
         .with_stage(
             Stage::with_backbuffer()
                 .clear_target([0.0, 0.0, 0.0, 1.0], 1.0)
-                .with_pass(DrawFlat2D::new()),
+                .with_pass(DrawFlat2D::new())
         );
 
     let game_data = GameDataBuilder::default()

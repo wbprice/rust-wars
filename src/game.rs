@@ -4,7 +4,7 @@ use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use amethyst::prelude::*;
 use amethyst::renderer::{
     Camera, PngFormat, Projection, SpriteRender, SpriteSheet,
-    SpriteSheetFormat, SpriteSheetHandle, Texture, TextureMetadata,
+    SpriteSheetFormat, SpriteSheetHandle, Texture, TextureMetadata
 };
 
 pub struct Game;
@@ -17,7 +17,7 @@ pub const CURSOR_HEIGHT: f32 = 64.0;
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
-    transform.set_z(1.0);
+    transform.set_z(2.0);
     world
         .create_entity()
         .with(Camera::from(Projection::orthographic(
@@ -34,15 +34,33 @@ fn initialize_cursor(world: &mut World, sprite_sheet: SpriteSheetHandle) {
     let mut transform = Transform::default();
 
     let y = ARENA_HEIGHT / 2.0;
-    transform.set_xyz(8.0, y, 0.0);
+    transform.set_xyz(8.0, y, 1.0);
+
+    let sprite_render = SpriteRender {
+        sprite_sheet: sprite_sheet.clone(),
+        sprite_number: 4
+    };
+
+    world.create_entity()
+        .with(Cursor::new(Faction::Blue))
+        .with(sprite_render.clone())
+        .with(transform)
+        .build();
+}
+
+fn initialize_tank(world: &mut World, sprite_sheet: SpriteSheetHandle, x: i8, y: i8) {
+    let mut transform = Transform::default();
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet.clone(),
         sprite_number: 0
     };
 
+    let tank = Tank::new(Faction::Blue, x, y);
+    transform.set_xyz(x as f32 * 48.0, x as f32 * 48.0, 0.0);
+
     world.create_entity()
-        .with(Cursor::new(Faction::Blue))
+        .with(tank)
         .with(sprite_render.clone())
         .with(transform)
         .build();
@@ -77,7 +95,10 @@ impl SimpleState for Game {
         let world = data.world;
         let sprite_sheet_handle = load_sprite_sheet(world);
 
-        initialize_cursor(world, sprite_sheet_handle);
+        world.register::<Tank>();
+
+        initialize_cursor(world, sprite_sheet_handle.clone());
+        initialize_tank(world, sprite_sheet_handle, 2, 2);
         initialise_camera(world);
     }
 
@@ -106,5 +127,25 @@ impl Cursor {
 }
 
 impl Component for Cursor {
+    type Storage = DenseVecStorage<Self>;
+}
+
+pub struct Tank {
+    pub faction: Faction,
+    pub x: i8,
+    pub y: i8
+}
+
+impl Tank {
+    fn new (faction: Faction, x: i8, y: i8) -> Tank {
+        Tank {
+            faction,
+            x,
+            y
+        }
+    }
+}
+
+impl Component for Tank {
     type Storage = DenseVecStorage<Self>;
 }
